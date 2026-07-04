@@ -11,3 +11,102 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+
+//Premier schéma de base de données
+
+enum UserRole {
+  SUPER_ADMIN
+  RESIDENCE_ADMIN
+  EMPLOYEE
+  FAMILY_MEMBER
+  RESIDENT
+}
+
+enum RoomStatus {
+  AVAILABLE
+  OCCUPIED
+  MAINTENANCE
+}
+
+model Residence {
+  id        String   @id @default(cuid())
+  name      String
+  email     String?
+  phone     String?
+  address   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users     User[]
+  residents Resident[]
+  rooms     Room[]
+}
+
+model User {
+  id           String   @id @default(cuid())
+  firstName    String
+  lastName     String
+  email        String   @unique
+  passwordHash String
+  role         UserRole
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  residenceId String?
+  residence   Residence? @relation(fields: [residenceId], references: [id])
+
+  familyLinks FamilyResidentLink[]
+}
+
+model Resident {
+  id          String   @id @default(cuid())
+  firstName   String
+  lastName    String
+  dateOfBirth DateTime?
+  roomNumber  String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  residenceId String
+  residence   Residence @relation(fields: [residenceId], references: [id])
+
+  roomId String? @unique
+  room   Room?   @relation(fields: [roomId], references: [id])
+
+  familyLinks FamilyResidentLink[]
+}
+
+model Room {
+  id        String     @id @default(cuid())
+  number    String
+  floor     Int?
+  status    RoomStatus @default(AVAILABLE)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  residenceId String
+  residence   Residence @relation(fields: [residenceId], references: [id])
+
+  resident Resident?
+
+  @@unique([residenceId, number])
+}
+
+model FamilyResidentLink {
+  id               String   @id @default(cuid())
+  relationship     String?
+  accessLevel      String   @default("STANDARD")
+  isPrimaryContact Boolean  @default(false)
+  createdAt        DateTime @default(now())
+
+  familyMemberId String
+  familyMember   User @relation(fields: [familyMemberId], references: [id])
+
+  residentId String
+  resident   Resident @relation(fields: [residentId], references: [id])
+
+  @@unique([familyMemberId, residentId])
+}

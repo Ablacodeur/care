@@ -1,75 +1,58 @@
-# React + TypeScript + Vite
+# CARE
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CARE est une application SaaS de gestion destinée aux résidences privées
+pour aînés.
 
-Currently, two official plugins are available:
+## Objectif
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+CARE aide les résidences à gérer leurs résidents, leurs chambres, leurs
+services, leurs employés, leurs demandes, leurs factures et leurs paiements.
 
-## React Compiler
+L’application comprend également un portail destiné aux familles et aux
+proches autorisés.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Fonctionnalités prévues
 
-## Expanding the ESLint configuration
+- Gestion des résidences
+- Gestion des résidents
+- Gestion des chambres
+- Gestion des employés et des rôles
+- Portail des familles
+- Consultation des services inclus au bail
+- Demandes d’ajout ou de retrait de services
+- Facturation et paiements
+- Abonnements Stripe
+- Documents et notifications
+- Tableau de bord administratif
+- Historique des actions
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Technologies
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Frontend
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- React
+- TypeScript
+- Vite
+- Material UI
+- Axios
+- TanStack Query
+- React Hook Form
+- Zod
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Backend
 
-```
+- Node.js
+- Express
+- TypeScript
+- PostgreSQL
+- Prisma ORM
+- JWT
+- Zod
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Structure
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+```txt
+care/
+├── client/
+├── server/
+└── README.md
